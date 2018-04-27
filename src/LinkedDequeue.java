@@ -12,11 +12,53 @@ public class LinkedDequeue
 {
     private QueueNode rear;
     private QueueNode front;
-    private QueueNode previousTail;
     private int count;
 
     public static void main(String[] args) {
-        System.out.println("It works");
+
+        //TODO: Maybe make a console-like interface here with a scanner to select operations to perform
+        // Demonstrate the creation of a LinkedDequeue and the addition of a few nodes using headAdd
+        System.out.println("Let's start by creating a new LinkedDequeue with strings " +
+                "'alpha', 'beta', 'omega' at the head of the queue.");
+        LinkedDequeue dequeue1 = new LinkedDequeue();
+        dequeue1.headAdd("alpha");
+        dequeue1.headAdd("beta");
+        dequeue1.headAdd("omega");
+        System.out.println("This is the current state of our queue:");
+        System.out.println(dequeue1.toString());
+
+        // Demonstrate tailAdd
+        System.out.println("Now let's add ints 1, 2, and 3 to the tail of the queue");
+        dequeue1.tailAdd(1);
+        dequeue1.tailAdd(2);
+        dequeue1.tailAdd(3);
+        System.out.println("This is the state of our queue after adding the new int values:");
+        System.out.println(dequeue1.toString());
+
+        // Demonstrate headPeek and tailPeek
+        System.out.println("Peeking at the head of the queue reveals the object " + dequeue1.headPeek());
+        System.out.println("Peeking at the tail of the queue reveals the object " + dequeue1.tailPeek());
+        System.out.println();
+
+        // Demonstrate tailRemove and headRemove
+        dequeue1.tailRemove();
+        System.out.println("After executing tailRemove, if we peek at the tail again, we can " +
+                "see the object at the tail has changed, and is now: " + dequeue1.tailPeek());
+        dequeue1.headRemove();
+        System.out.println("Similarly, after executing headRemove, if we peek at the head again " +
+                "we can see the object at the head has changed, and is now: " + dequeue1.headPeek());
+
+        // Demonstrate toString
+        System.out.println("Examining the entire queue again shows us the objects still in the queue: ");
+        System.out.println(dequeue1.toString());
+
+        // Demonstrate size
+        System.out.println("We can see after these two removals that only 4 nodes remain in the queue. " +
+                "The size method can also reveal this information: " + dequeue1.size());
+
+        // Demonstrate isEmpty
+        System.out.print("The isEmpty method allows us to determine if there are any nodes in the queue: ");
+        System.out.println(dequeue1.isEmpty());
     }
 
     /**
@@ -36,31 +78,8 @@ public class LinkedDequeue
      */
     public LinkedDequeue()
     {
-	   rear = front = previousTail = null;
+	   rear = front = null;
 	   count = 0;
-    }
-
-    /**
-     *  This method will construct a new QueueNode and add it onto the rear
-     *  of the queue (standard FIFO behavior). If it is the first node added into
-     *  the queue, both front and rear will reference it, otherwise it is added
-     *  using the rear variable.  The node counter is also updated.
-     *
-     *  @param   x     The Object to be added as part of a new QueueNode
-     */
-    public void add (Object x)
-    {
-	   QueueNode temp = new QueueNode();
-	   temp.item = x;
-	   temp.link = null;
-
-	   if (rear == null) front = rear = temp;
-	   else
-	   {
-	      rear.link = temp;
-	      rear = temp;
-	   }
-	   count++ ;
     }
 
     /**
@@ -131,8 +150,6 @@ public class LinkedDequeue
 
         if (rear == null) front = rear = temp;
         else {
-            //TODO: Double-check this
-            previousTail = rear;
             rear.link = temp;
             rear = temp;
         }
@@ -157,8 +174,9 @@ public class LinkedDequeue
         if (isEmpty()) return null;
         else {
             Object temp = rear.item;
+
             QueueNode newRear = front;
-            while (newRear.link != null) newRear = newRear.link;
+            while (newRear.link != rear) newRear = newRear.link;
             rear = newRear;
             count--;
             return temp;
@@ -186,31 +204,10 @@ public class LinkedDequeue
         StringBuilder builder = new StringBuilder();
         QueueNode node = front;
         for (int i = 0; i < count; i++) {
-            builder.append("Object at node ").append(i).append(": ").append(node.item);
+            builder.append("Object at node ").append(i).append(": ").append(node.item).append("\n");
             if (node.link == null) break;
             else node = node.link;
         }
         return builder.toString();
     }
-
-    /**
-     *  This method will remove an item from the front of the queue.
-     *  In doing so, the queue variables are reset to detach the node,
-     *  and the Object which it contains is then returned.  The queue
-     *  counter is also updated to reflect the removal.
-     *
-     *  @return     The Object which was just removed from the queue.
-     */
-   public Object delete ()
-   {
-     if ( isEmpty() ) return null;
-     else
-     {
-        Object tempItem = front.item;
-        front = front.link;
-        if (front == null)   rear = null;
-        count -- ;
-        return tempItem;
-      }
-   }
 }
