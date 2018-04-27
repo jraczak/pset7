@@ -12,7 +12,12 @@ public class LinkedDequeue
 {
     private QueueNode rear;
     private QueueNode front;
+    private QueueNode previousTail;
     private int count;
+
+    public static void main(String[] args) {
+        System.out.println("It works");
+    }
 
     /**
      *  The QueueNode class is an inner class implemented to model a queue node;
@@ -31,7 +36,7 @@ public class LinkedDequeue
      */
     public LinkedDequeue()
     {
-	   rear = front = null;
+	   rear = front = previousTail = null;
 	   count = 0;
     }
 
@@ -126,7 +131,9 @@ public class LinkedDequeue
 
         if (rear == null) front = rear = temp;
         else {
-            temp.link = rear;
+            //TODO: Double-check this
+            previousTail = rear;
+            rear.link = temp;
             rear = temp;
         }
         count++;
@@ -150,7 +157,11 @@ public class LinkedDequeue
         if (isEmpty()) return null;
         else {
             Object temp = rear.item;
-            //TODO: How do I point to the tail now?
+            QueueNode newRear = front;
+            while (newRear.link != null) newRear = newRear.link;
+            rear = newRear;
+            count--;
+            return temp;
         }
     }
 
@@ -162,6 +173,24 @@ public class LinkedDequeue
     public int size()
     {
 	    return count;
+    }
+
+    /**
+     * This method prints each of the objects held by the nodes in the Queue,
+     * one on each line.
+     *
+     * @return  A string representing all objects held by the nodes in the queue
+     */
+    public String toString() {
+        if (isEmpty()) return null;
+        StringBuilder builder = new StringBuilder();
+        QueueNode node = front;
+        for (int i = 0; i < count; i++) {
+            builder.append("Object at node ").append(i).append(": ").append(node.item);
+            if (node.link == null) break;
+            else node = node.link;
+        }
+        return builder.toString();
     }
 
     /**
