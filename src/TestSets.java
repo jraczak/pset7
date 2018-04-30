@@ -144,7 +144,7 @@ public class TestSets
       // BEGIN ROW 4 (gridy=3)
       constraints.gridy = 3;
 
-      JLabel inSetA = new JLabel("Set A: ");
+      JLabel inSetA = new JLabel("A: ");
       constraints.gridx = 0;
       constraints.gridwidth = 2;
       frame.add(inSetA, constraints);
@@ -155,7 +155,7 @@ public class TestSets
       constraints.gridwidth = 4;
       frame.add(setAContents, constraints);
 
-      JLabel inSetB = new JLabel("Set B: ");
+      JLabel inSetB = new JLabel("B: ");
       constraints.gridx = 6;
       constraints.gridwidth = 2;
       frame.add(inSetB, constraints);
@@ -166,6 +166,23 @@ public class TestSets
       constraints.gridwidth = 4;
       frame.add(setBContents, constraints);
 
+      // BEGIN ROW 5 (gridy=4)
+      constraints.gridy = 4;
+
+      String cardinalityLabel = "Cardinality: ";
+      JLabel aCardinality = new JLabel(cardinalityLabel);
+      aCardinality.setForeground(Color.BLUE);
+      constraints.gridx = 0;
+      constraints.gridwidth = 5;
+      frame.add(aCardinality, constraints);
+
+      JLabel bCardinality = new JLabel(cardinalityLabel);
+      bCardinality.setForeground(Color.RED);
+      constraints.gridx = 6;
+      constraints.gridwidth = 5;
+      frame.add(bCardinality, constraints);
+
+
 
       // SET UP BUTTONS
       //TODO handle parse int error
@@ -173,10 +190,9 @@ public class TestSets
           @Override
           public void actionPerformed(ActionEvent e) {
               setA.include(Integer.parseInt(setATextField.getText()));
-              System.out.println("Updated Set A: " + setA.toString());
               setAContents.setText(setA.toString());
               setATextField.setText("");
-              //TODO Add cardinality update
+              aCardinality.setText(cardinalityLabel + setA.cardinality());
           }
       });
 
@@ -186,9 +202,21 @@ public class TestSets
               setB.include(Integer.parseInt(setBTextField.getText()));
               setBContents.setText(setB.toString());
               setBTextField.setText("");
-              //TODO: Add cardinality update
+              bCardinality.setText(cardinalityLabel + setB.cardinality());
           }
       });
+
+      //TODO See if it makes sense to do this to DRY up the listeners
+      class bitSetActionListener implements ActionListener {
+
+          bitSetActionListener(String name) {
+          }
+
+          @Override
+          public void actionPerformed(ActionEvent e) {
+
+          }
+      }
 
 
       //JPanel northPanel = new JPanel();
