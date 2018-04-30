@@ -5,6 +5,8 @@
 *  @author:  Henry Leitner
 */
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 
 public class TestSets
@@ -27,7 +29,117 @@ public class TestSets
 
   public static void main (String [] args)
   {
-     Bitset setA = new Bitset (16);
+
+      //JFrame frame = new JFrame("Bitset Demo GUI");
+      //frame.setSize(960, 600);
+      //frame.getContentPane().setLayout(new BorderLayout());
+      //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+      //String titleText = "Welcome to the Bitset demo interface!";
+      //String introText = "<html> Use the controls below to create Bitsets and explore operations on " +
+      //        "and between them. <br>Use the exit button at the bottom to quit the program.</html>";
+      //JLabel titleLabel = new JLabel(titleText, JLabel.CENTER);
+      //JLabel introLabel = new JLabel(introText, JLabel.CENTER);
+//
+      //JPanel northPanel = new JPanel();
+      //northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+      //northPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+      //northPanel.add(titleLabel);
+      //northPanel.add(introLabel);
+      //frame.add(northPanel, BorderLayout.NORTH);
+//
+      //JPanel westPanel = new JPanel();
+      //westPanel.setLayout(new GridBagLayout());
+      //westPanel.setMaximumSize(new Dimension(75, 300));
+      //GridBagConstraints westPanelConstraints = new GridBagConstraints();
+//
+      //String setAText = "<html>Create set A by typing integers less than 16, separated by spaces,<br>" +
+      //        "and then pressing the create button.</html>";
+      //JLabel setALabel = new JLabel(setAText);
+      //westPanelConstraints.gridx = 0;
+      //westPanelConstraints.gridy = 0;
+      //westPanel.add(setALabel, westPanelConstraints);
+//
+      //frame.add(westPanel, BorderLayout.WEST);
+//
+//
+      //frame.setVisible(true);
+
+      JFrame frame = new JFrame("Bitset Demo GUI");
+      frame.setSize(960, 600);
+      frame.getContentPane().setLayout(new GridBagLayout());
+      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+      GridBagConstraints constraints = new GridBagConstraints();
+
+      //String titleText = "Welcome to the Bitset demo interface!";
+      String introText = "<html>Welcome to the Bitset demo interface!<br>" +
+              "Use the controls below to create Bitsets and explore operations on " +
+              "and between them. <br>Use the exit button at the bottom to quit the program.</html>";
+      //JLabel titleLabel = new JLabel(titleText, JLabel.CENTER);
+      JLabel introLabel = new JLabel(introText, JLabel.CENTER);
+      constraints.gridx = 0;
+      constraints.gridy = 0;
+      constraints.gridwidth = 12;
+      constraints.fill = GridBagConstraints.HORIZONTAL;
+      constraints.anchor = GridBagConstraints.CENTER;
+      constraints.insets = new Insets(10, 10, 10, 10);
+
+      frame.add(introLabel, constraints);
+
+      constraints.gridx = 0;
+      constraints.gridy = 1;
+      constraints.gridwidth = 6;
+
+
+      String setALabel = "Create set A by typing several integers less than 16.";
+      JLabel label1 = new JLabel(setALabel);
+      String setBLabel = "Create set A by typing several integers less than 8.";
+      JLabel label2 = new JLabel(setBLabel);
+
+      frame.add(label1, constraints);
+
+      constraints.gridx = 6;
+      constraints.gridy = 1;
+      constraints.gridwidth = 6;
+
+      frame.add(label2, constraints);
+
+      constraints.gridx = 0;
+      constraints.gridy = 2;
+      constraints.gridwidth = 4;
+
+      JTextField setATextField = new JTextField("", 20);
+      frame.add(setATextField, constraints);
+
+      constraints.gridx = 4;
+      constraints.gridy = 2;
+      constraints.gridwidth = 2;
+      JButton createAButton = new JButton("Create A");
+      frame.add(createAButton, constraints);
+
+      //JPanel northPanel = new JPanel();
+      //northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+      //northPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+      //northPanel.add(titleLabel);
+      //northPanel.add(introLabel);
+      //frame.add(northPanel, BorderLayout.NORTH);
+//
+      //JPanel westPanel = new JPanel();
+      //westPanel.setLayout(new GridBagLayout());
+      //westPanel.setMaximumSize(new Dimension(75, 300));
+//
+      //String setAText = "<html>Create set A by typing integers less than 16, separated by spaces,<br>" +
+      //        "and then pressing the create button.</html>";
+      //JLabel setALabel = new JLabel(setAText);
+      //westPanel.add(setALabel);
+//
+      //frame.add(westPanel, BorderLayout.WEST);
+
+
+      frame.setVisible(true);
+
+
+      Bitset setA = new Bitset (16);
      Bitset setB = new Bitset (8);
      int command;
 
