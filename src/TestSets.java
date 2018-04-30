@@ -7,6 +7,8 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class TestSets
@@ -65,6 +67,11 @@ public class TestSets
 //
       //frame.setVisible(true);
 
+      Bitset setA = new Bitset (16);
+      Bitset setB = new Bitset (8);
+
+      //TODO Move UI construction to its own method to clean up main
+
       JFrame frame = new JFrame("Bitset Demo GUI");
       frame.setSize(960, 600);
       frame.getContentPane().setLayout(new GridBagLayout());
@@ -86,23 +93,29 @@ public class TestSets
 
       frame.add(introLabel, constraints);
 
+      // BEGIN ROW 2
+
       constraints.gridx = 0;
       constraints.gridy = 1;
       constraints.gridwidth = 6;
 
 
-      String setALabel = "Create set A by typing several integers less than 16.";
-      JLabel label1 = new JLabel(setALabel);
-      String setBLabel = "Create set A by typing several integers less than 8.";
-      JLabel label2 = new JLabel(setBLabel);
+      String setAText = "Add any SINGLE integer < 16 to add to set A";
+      JLabel setALabel = new JLabel(setAText);
+      setALabel.setForeground(Color.BLUE);
+      String setBText = "Add any SINGLE integer < 8 to add to set B";
+      JLabel setBLabel = new JLabel(setBText);
+      setBLabel.setForeground(Color.RED);
 
-      frame.add(label1, constraints);
+      frame.add(setALabel, constraints);
 
       constraints.gridx = 6;
       constraints.gridy = 1;
       constraints.gridwidth = 6;
 
-      frame.add(label2, constraints);
+      frame.add(setBLabel, constraints);
+
+      // BEGIN ROW 3
 
       constraints.gridx = 0;
       constraints.gridy = 2;
@@ -116,6 +129,67 @@ public class TestSets
       constraints.gridwidth = 2;
       JButton createAButton = new JButton("Create A");
       frame.add(createAButton, constraints);
+
+      constraints.gridx = 6;
+      constraints.gridy = 2;
+      constraints.gridwidth = 4;
+      JTextField setBTextField = new JTextField("", 20);
+      frame.add(setBTextField, constraints);
+      constraints.gridx = 10;
+      constraints.gridy = 2;
+      constraints.gridwidth = 2;
+      JButton createBButton = new JButton("Create B");
+      frame.add(createBButton, constraints);
+
+      // BEGIN ROW 4 (gridy=3)
+      constraints.gridy = 3;
+
+      JLabel inSetA = new JLabel("Set A: ");
+      constraints.gridx = 0;
+      constraints.gridwidth = 2;
+      frame.add(inSetA, constraints);
+
+      JLabel setAContents = new JLabel();
+      setAContents.setForeground(Color.BLUE);
+      constraints.gridx = 2;
+      constraints.gridwidth = 4;
+      frame.add(setAContents, constraints);
+
+      JLabel inSetB = new JLabel("Set B: ");
+      constraints.gridx = 6;
+      constraints.gridwidth = 2;
+      frame.add(inSetB, constraints);
+
+      JLabel setBContents = new JLabel();
+      setBContents.setForeground(Color.RED);
+      constraints.gridx = 8;
+      constraints.gridwidth = 4;
+      frame.add(setBContents, constraints);
+
+
+      // SET UP BUTTONS
+      //TODO handle parse int error
+      createAButton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              setA.include(Integer.parseInt(setATextField.getText()));
+              System.out.println("Updated Set A: " + setA.toString());
+              setAContents.setText(setA.toString());
+              setATextField.setText("");
+              //TODO Add cardinality update
+          }
+      });
+
+      createBButton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              setB.include(Integer.parseInt(setBTextField.getText()));
+              setBContents.setText(setB.toString());
+              setBTextField.setText("");
+              //TODO: Add cardinality update
+          }
+      });
+
 
       //JPanel northPanel = new JPanel();
       //northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
@@ -138,9 +212,6 @@ public class TestSets
 
       frame.setVisible(true);
 
-
-      Bitset setA = new Bitset (16);
-     Bitset setB = new Bitset (8);
      int command;
 
      Scanner keyboard = new Scanner (System.in);

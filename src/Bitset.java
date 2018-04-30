@@ -323,10 +323,12 @@ class Bitset
         clear ();
         while (in.hasNextInt())
         {
+            System.out.println("Has an int");
             int n = in.nextInt();
             if (n >= 0 && n < maxSize)  include (n);
         }
-        in.next ();
+        //TODO: See if I can scrap this for this version
+        //in.next ();
     }
 
     /**
